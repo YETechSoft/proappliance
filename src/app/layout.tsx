@@ -1,10 +1,5 @@
-// import Icons
 import 'bootstrap-icons/font/bootstrap-icons.css';
-
-//import bootstrap
 import 'bootstrap/dist/css/bootstrap.css';
-
-//import aos
 import 'aos/dist/aos.css';
 
 import type { Metadata } from 'next';
