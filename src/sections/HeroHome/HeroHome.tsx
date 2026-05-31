@@ -16,8 +16,8 @@ export default function HeroHome() {
                 Trust Pro Appliance Express for All Your Repair Needs
               </h4>
               <div className="hero-btnbox">
-                <a href="tel:+16173377045">
-                  <span>+1 (617)337-7045</span>
+                <a href="tel:+19789328806">
+                  <span>+1 (978) 932-88 06</span>
                 </a>
                 <Link href={'/request'}>
                   <span>Service Request</span>

@@ -89,11 +89,11 @@ export default function Contact() {
                   <div className="contact-item">
                     <i className="bi bi-telephone-inbound"></i>
                     <div className="contact-item-content">
-                      <a href="tel:+16173377045" className="contact-item-link">
+                      <a href="tel:+19789328806" className="contact-item-link">
                         Call us
                       </a>
                       <p className="contact-item-desc">
-                        +1 (617) 337-7045</p>
+                        +1 (978) 932-8806</p>
                     </div>
                   </div>
                 </div>

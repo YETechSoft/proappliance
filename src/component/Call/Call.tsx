@@ -11,8 +11,8 @@ export default function Call() {
       <div className="tel-content">
         <p className="tel-sub-title">Need help? Talk to an expert</p>
         <h4 className="tell-number">
-          <a className="tel-link" href="tel:+16173377045">
-            +1 (617) 337-7045
+          <a className="tel-link" href="tel:+19789328806">
+            +1 (978) 932-8806
           </a>
         </h4>
       </div>

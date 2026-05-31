@@ -31,8 +31,8 @@ export default function Footer() {
               <i className="bi bi-telephone"></i>
               <p className="item-content">
                 <span>Call us on:</span>
-                <a href="tel:+16173377045" className="item-tel">
-                  +1 (617) 337-7045
+                <a href="tel:+19789328806" className="item-tel">
+                  +1 (978) 932-8806
                 </a>
               </p>
             </div>
@@ -121,7 +121,7 @@ export default function Footer() {
                   <Link href={'/request'}>Service Request</Link>
                 </li>
                 <li>
-                  <a href="tel:+16173377045">Customer Support</a>
+                  <a href="tel:+19789328806">Customer Support</a>
                 </li>
                 <li>
                   <Link href={'/contact'}>Contact us</Link>
