@@ -64,7 +64,7 @@ export default function ServiceRequest({ custom }: IProps) {
       Swal.fire({
         icon: 'error',
         title: 'Error!',
-        text: 'Something wrong',
+        text: data.error || 'Something wrong',
         timer: 5000,
       });
     }
