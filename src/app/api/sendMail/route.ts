@@ -21,14 +21,20 @@ export async function POST(req: Request) {
     }
 
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
       auth: {
         user: emailUser,
         pass: emailPass,
       },
+      connectionTimeout: 10000,
+      greetingTimeout: 10000,
+      socketTimeout: 15000,
+      tls: {
+        servername: 'smtp.gmail.com',
+      },
     });
-
-    await transporter.verify();
 
     await transporter.sendMail({
       from: emailUser,
@@ -50,6 +56,9 @@ export async function POST(req: Request) {
       | (Error & { code?: string; response?: string; responseCode?: number })
       | undefined;
 
+    const isTimeout =
+      error?.code === 'ETIMEDOUT' || error?.message?.includes('timeout');
+
     console.error('Mail error:', {
       message: error?.message,
       code: error?.code,
@@ -58,7 +67,12 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json(
-      { success: false, error: 'Failed to send mail' },
+      {
+        success: false,
+        error: isTimeout
+          ? 'Mail server connection timed out'
+          : 'Failed to send mail',
+      },
       { status: 500 }
     );
   }

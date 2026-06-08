@@ -43,30 +43,50 @@ export default function ServiceRequest({ custom }: IProps) {
   } = useForm<FormData>({ resolver: zodResolver(schema) });
 
   const onSubmit = async (formData: FormData) => {
-    const res = await fetch('/api/sendMail', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
+    const controller = new AbortController();
+    const timeoutId = window.setTimeout(() => controller.abort(), 20000);
 
-    const data = await res.json();
-    if (data.success) {
-      Swal.fire({
-        icon: 'success',
-        title: 'Success!',
-        text: 'Your message has been sent successfully!',
-        timer: 5000,
+    try {
+      const res = await fetch('/api/sendMail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+        signal: controller.signal,
       });
-      reset();
-    } else {
+
+      const data = await res.json();
+      if (data.success) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Success!',
+          text: 'Your message has been sent successfully!',
+          timer: 5000,
+        });
+        reset();
+        return;
+      }
+
       Swal.fire({
         icon: 'error',
         title: 'Error!',
         text: data.error || 'Something wrong',
         timer: 5000,
       });
+    } catch (error) {
+      const isAbort = error instanceof DOMException && error.name === 'AbortError';
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Error!',
+        text: isAbort
+          ? 'Request timed out. Please try again shortly.'
+          : 'Something went wrong',
+        timer: 5000,
+      });
+    } finally {
+      window.clearTimeout(timeoutId);
     }
   };
 
