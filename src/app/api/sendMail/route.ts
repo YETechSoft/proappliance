@@ -1,69 +1,68 @@
 import { NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
 
 export const runtime = 'nodejs';
 
 const CONTACT_EMAIL_TO =
   process.env.CONTACT_EMAIL_TO || 'proapplianceexpress@gmail.com';
+const CONTACT_EMAIL_FROM =
+  process.env.CONTACT_EMAIL_FROM || 'Pro Appliance Express <onboarding@resend.dev>';
 
 export async function POST(req: Request) {
   const { name, phone, email, message } = await req.json();
-  const emailUser = process.env.EMAIL_USER;
-  const emailPass = process.env.EMAIL_PASS;
+  const resendApiKey = process.env.RESEND_API_KEY;
 
   try {
-    if (!emailUser || !emailPass) {
-      console.error('Mail error: EMAIL_USER or EMAIL_PASS is missing');
+    if (!resendApiKey) {
+      console.error('Mail error: RESEND_API_KEY is missing');
       return NextResponse.json(
         { success: false, error: 'Mail service is not configured' },
         { status: 500 }
       );
     }
 
-    const transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
-      port: 465,
-      secure: true,
-      auth: {
-        user: emailUser,
-        pass: emailPass,
+    const response = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${resendApiKey}`,
+        'Content-Type': 'application/json',
       },
-      connectionTimeout: 10000,
-      greetingTimeout: 10000,
-      socketTimeout: 15000,
-      tls: {
-        servername: 'smtp.gmail.com',
-      },
+      body: JSON.stringify({
+        from: CONTACT_EMAIL_FROM,
+        to: [CONTACT_EMAIL_TO],
+        reply_to: email,
+        subject: 'Yeni Muraciet',
+        html: `
+          <h3>Yeni Muraciet:</h3>
+          <p><strong>Ad:</strong> ${name}</p>
+          <p><strong>Telefon:</strong> ${phone}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Mesaj:</strong> ${message}</p>
+        `,
+      }),
+      signal: AbortSignal.timeout(15000),
     });
 
-    await transporter.sendMail({
-      from: emailUser,
-      to: CONTACT_EMAIL_TO,
-      replyTo: email,
-      subject: 'Yeni Müraciət',
-      html: `
-        <h3>Yeni Müraciət:</h3>
-        <p><strong>Ad:</strong> ${name}</p>
-        <p><strong>Telefon:</strong> ${phone}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Mesaj:</strong> ${message}</p>
-      `,
-    });
+    if (!response.ok) {
+      const errorBody = await response.text();
+      console.error('Mail error:', {
+        status: response.status,
+        body: errorBody,
+      });
+
+      return NextResponse.json(
+        { success: false, error: 'Failed to send mail' },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json({ success: true });
   } catch (err) {
-    const error = err as
-      | (Error & { code?: string; response?: string; responseCode?: number })
-      | undefined;
-
-    const isTimeout =
-      error?.code === 'ETIMEDOUT' || error?.message?.includes('timeout');
+    const error = err as Error | undefined;
+    const isTimeout = error?.name === 'TimeoutError' || error?.message?.includes('timeout');
 
     console.error('Mail error:', {
       message: error?.message,
-      code: error?.code,
-      responseCode: error?.responseCode,
-      response: error?.response,
+      name: error?.name,
     });
 
     return NextResponse.json(
