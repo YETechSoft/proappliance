@@ -4,6 +4,7 @@ import './page.css';
 import AboutUs from '@/sections/AboutUs/AboutUs';
 import BrandsRepair from '@/sections/BrandsRepair/BrandsRepair';
 import ServiceRequest from '@/sections/ServiceRequest/ServiceRequest';
+import Pricing from '@/sections/Pricing/Pricing';
 
 export default function Home() {
   return (
@@ -13,7 +14,10 @@ export default function Home() {
         <OurServices />
       </div>
       <AboutUs />
-      <div className="request-wrapper">
+      <div className="pricing-wrapper">
+        <Pricing />
+      </div>
+      <div className="request-wrapper" id="home-service-request">
         <ServiceRequest />
       </div>
       <BrandsRepair />
