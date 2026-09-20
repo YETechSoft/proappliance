@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { bookingAppliances, contactSchema } from '@/lib/booking';
 
 export const runtime = 'nodejs';
 
@@ -8,7 +9,19 @@ const CONTACT_EMAIL_FROM =
   process.env.CONTACT_EMAIL_FROM || 'Pro Appliance Express <onboarding@resend.dev>';
 
 export async function POST(req: Request) {
-  const { name, phone, email, message } = await req.json();
+  const parsed = contactSchema.safeParse(await req.json().catch(() => null));
+  if (!parsed.success) {
+    return NextResponse.json({ success: false, error: 'Please check your contact and service details.' }, { status: 400 });
+  }
+  const { name, phone, email, message, booking } = parsed.data;
+  const escapeHtml = (value: string) => value.replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]!));
+  const bookingMessage = booking ? [
+    `Service: ${booking.service}`,
+    `Appliance: ${bookingAppliances.find(item => item.value === booking.appliance)?.label}`,
+    `Brand: ${booking.brand || 'Not specified'}`,
+    `Service ZIP code: ${booking.zip}`,
+    '', message,
+  ].join('\n') : message;
   const resendApiKey = process.env.RESEND_API_KEY;
 
   try {
@@ -30,13 +43,13 @@ export async function POST(req: Request) {
         from: CONTACT_EMAIL_FROM,
         to: [CONTACT_EMAIL_TO],
         reply_to: email,
-        subject: 'Yeni Muraciet',
+        subject: booking ? 'Online service request - Pro Appliance Express' : 'Yeni Muraciet',
         html: `
           <h3>Yeni Muraciet:</h3>
-          <p><strong>Ad:</strong> ${name}</p>
-          <p><strong>Telefon:</strong> ${phone}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Mesaj:</strong> ${message}</p>
+          <p><strong>Ad:</strong> ${escapeHtml(name)}</p>
+          <p><strong>Telefon:</strong> ${escapeHtml(phone)}</p>
+          <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+          <p><strong>Mesaj:</strong><br />${escapeHtml(bookingMessage).replace(/\n/g, '<br />')}</p>
         `,
       }),
       signal: AbortSignal.timeout(15000),

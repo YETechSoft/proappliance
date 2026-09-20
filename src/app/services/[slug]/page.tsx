@@ -76,7 +76,7 @@ export default function ServicesPage() {
               <SectionTitle tag={service.tag} title={service.title} />
               <p className="service-details_text">{service.text_1}</p>
               <div className="service-details-actions">
-                <BookOnline />
+                <BookOnline appliance={service.slug} />
                 <MainButton title="+1 (978) 932-8806" href="tel:+19789328806" />
               </div>
             </div>

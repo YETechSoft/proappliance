@@ -7,6 +7,7 @@ import { Barlow, Roboto } from 'next/font/google';
 import Header from '@/component/Header/Header';
 import './globals.css';
 import Footer from '@/component/Footer/Footer';
+import SiteChrome from '@/component/SiteChrome';
 
 const barlow = Barlow({
   subsets: ['latin'],
@@ -98,9 +99,9 @@ export default function RootLayout({
         ></script>
       </head>
       <body className={`${barlow.className} ${roboto.className}`}>
-        <Header />
-        {children}
-        <Footer />
+        <SiteChrome header={<Header />} footer={<Footer />}>
+          {children}
+        </SiteChrome>
       </body>
     </html>
   );
