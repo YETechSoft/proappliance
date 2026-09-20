@@ -1,0 +1,65 @@
+@font-face {
+  font-family: 'Booking Icons';
+  src: url('/assets/fonts/booking-icons.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+  unicode-range: U+E90A;
+}
+
+.book-online .icon-spanner {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
+  font-family: 'Booking Icons';
+  font-size: 1.4em;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.book-online .icon-spanner::before {
+  content: '\e90a';
+}
+
+.book-online {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-height: 50px;
+  padding: 14px 22px;
+  border-radius: 30px;
+  background: var(--appliance-primary);
+  color: var(--appliance-white);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.7px;
+  line-height: 1.5;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.book-online span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+}
+
+.book-online:hover {
+  background: var(--appliance-black);
+  color: var(--appliance-white);
+}
+
+.book-online:focus-visible {
+  outline: 3px solid var(--appliance-black);
+  outline-offset: 4px;
+}

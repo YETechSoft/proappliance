@@ -9,6 +9,13 @@
   align-items: center;
 }
 
+.service-details-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
 .service-details_col {
   margin-bottom: 80px;
 }

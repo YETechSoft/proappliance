@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Head from 'next/head';
 import { notFound, useParams } from 'next/navigation';
 import MainButton from '@/component/MainButton/MainButton';
+import BookOnline from '@/component/BookOnline/BookOnline';
 import SectionTitle from '@/component/SectionTitle/SectionTitle';
 import Hero from '@/sections/Hero/Hero';
 import LoadScreen from '@/component/LoadScreen/LoadScreen';
@@ -74,7 +75,10 @@ export default function ServicesPage() {
             <div className="col-xl-6 col-lg-6 service-details_col">
               <SectionTitle tag={service.tag} title={service.title} />
               <p className="service-details_text">{service.text_1}</p>
-              <MainButton title="+1 (978) 932-8806" href="tel:+19789328806" />
+              <div className="service-details-actions">
+                <BookOnline />
+                <MainButton title="+1 (978) 932-8806" href="tel:+19789328806" />
+              </div>
             </div>
           </div>
           {service?.isContent && (

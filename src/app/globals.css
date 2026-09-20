@@ -33,6 +33,16 @@ body {
   /*-moz-osx-font-smoothing: grayscale;*/
 }
 
+@media (max-width: 767px) {
+  body {
+    padding-bottom: calc(56px + env(safe-area-inset-bottom, 0px));
+  }
+
+  html {
+    scroll-padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
 a {
   color: inherit;
   text-decoration: none;

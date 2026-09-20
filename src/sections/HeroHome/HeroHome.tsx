@@ -1,6 +1,6 @@
 import React from 'react';
 import './herohome.css';
-import Link from 'next/link';
+import BookOnline from '@/component/BookOnline/BookOnline';
 
 export default function HeroHome() {
   return (
@@ -19,9 +19,7 @@ export default function HeroHome() {
                 <a href="tel:+19789328806">
                   <span>+1 (978) 932-88 06</span>
                 </a>
-                <Link href={'/request'}>
-                  <span>Service Request</span>
-                </Link>
+                <BookOnline />
               </div>
             </div>
           </div>
