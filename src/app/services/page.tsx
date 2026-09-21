@@ -2,6 +2,7 @@ import React from 'react';
 import Hero from '@/sections/Hero/Hero';
 import OurServices from '@/sections/OurServices/OurServices';
 import './services.css';
+import { getBookingOptions } from '@/lib/booking-options';
 
 export const metadata = {
   title: 'Appliance Repair Services in Boston | Pro Appliance Express',
@@ -44,7 +45,8 @@ export const metadata = {
   },
 };
 
-export default function Services() {
+export default async function Services() {
+  const options = await getBookingOptions();
   return (
     <main id="main" className="page-services">
       <div className="services-content">
@@ -53,7 +55,7 @@ export default function Services() {
       <div className="services-wrapper">
         <div className="services-overlay"></div>
         <div className="services-content">
-          <OurServices custom />
+          <OurServices custom applianceTypes={options.applianceTypes} />
         </div>
       </div>
     </main>

@@ -187,6 +187,17 @@
 }
 
 @media (max-width: 769px) {
+  .footer .footer-header .container,
+  .footer-head-items,
+  .footer-head-item,
+  .footer-head-item .item-content {
+    width: 100%;
+    min-width: 0;
+  }
+  .footer-head-item .item-content a,
+  .footer-head-item .item-content span {
+    overflow-wrap: anywhere;
+  }
   .footer-inner-items {
     flex-direction: column;
     gap: 30px;

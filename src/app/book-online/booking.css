@@ -14,7 +14,7 @@
 .booking-section legend { float: none; width: auto; display: flex; align-items: center; gap: 12px; margin-bottom: 18px; font-size: 17px; font-weight: 700; text-transform: uppercase; }
 .booking-section legend > span { width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center; background: #e2edf4; border-radius: 50%; font-size: 12px; color: #38617a; }
 .booking-options { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
-.booking-service-options { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 480px; }
+.booking-service-options { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 720px; }
 .booking-option { position: relative; cursor: pointer; }
 .booking-option input { position: absolute; width: 1px; height: 1px; opacity: 0; }
 .booking-option > span { display: flex; align-items: center; justify-content: center; gap: 9px; min-height: 58px; padding: 12px; border: 1px solid #e1e7ed; border-radius: 16px; background: #fff; font-weight: 600; transition: background-color .15s, border-color .15s; }
@@ -54,7 +54,7 @@
   .booking-phone { font-size: 15px; }
   .booking-main { padding: 28px 20px max(28px, env(safe-area-inset-bottom)); }
   .booking-options { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-  .booking-service-options { max-width: none; }
+  .booking-service-options { grid-template-columns: 1fr; max-width: none; }
   .booking-option > span { font-size: 14px; border-radius: 12px; }
   .booking-input-grid { grid-template-columns: 1fr; gap: 16px; }
   .booking-submit { max-width: none; font-size: 14px; }

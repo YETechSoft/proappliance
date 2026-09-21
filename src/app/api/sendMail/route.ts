@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { bookingAppliances, contactSchema } from '@/lib/booking';
+import { createContactSchema } from '@/lib/booking';
+import { getBookingOptions } from '@/lib/booking-options';
 
 export const runtime = 'nodejs';
 
@@ -9,7 +10,8 @@ const CONTACT_EMAIL_FROM =
   process.env.CONTACT_EMAIL_FROM || 'Pro Appliance Express <onboarding@resend.dev>';
 
 export async function POST(req: Request) {
-  const parsed = contactSchema.safeParse(await req.json().catch(() => null));
+  const options = await getBookingOptions();
+  const parsed = createContactSchema(options).safeParse(await req.json().catch(() => null));
   if (!parsed.success) {
     return NextResponse.json({ success: false, error: 'Please check your contact and service details.' }, { status: 400 });
   }
@@ -17,7 +19,7 @@ export async function POST(req: Request) {
   const escapeHtml = (value: string) => value.replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]!));
   const bookingMessage = booking ? [
     `Service: ${booking.service}`,
-    `Appliance: ${bookingAppliances.find(item => item.value === booking.appliance)?.label}`,
+    `Appliance: ${booking.appliance}`,
     `Brand: ${booking.brand || 'Not specified'}`,
     `Service ZIP code: ${booking.zip}`,
     '', message,

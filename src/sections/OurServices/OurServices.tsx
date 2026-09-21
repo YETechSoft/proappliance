@@ -1,16 +1,37 @@
 import React from 'react';
 import './ourservices.css';
 import SectionTitle from '@/component/SectionTitle/SectionTitle';
-import { services } from '@/data/icondata';
+import { services as featuredServices } from '@/data/icondata';
+import { services as serviceDetails } from '@/data/data';
 import Link from 'next/link';
 import Plus from '@/component/Svg/Plus';
-import Dryer from '@/component/Svg/Dryer';
+import ApplianceService from '@/component/Svg/ApplianceService';
+import { toApplianceKey } from '@/lib/booking';
+import type { ApplianceTypeOption } from '@/lib/booking';
 
 interface IPops {
   custom?: boolean;
+  applianceTypes?: ApplianceTypeOption[];
 }
 
-export default function OurServices({ custom }: IPops) {
+export default function OurServices({ custom, applianceTypes }: IPops) {
+  const detailSlugs = new Set(serviceDetails.map(service => service.slug));
+  const backendServices = applianceTypes?.map(({ name, iconKey }) => {
+    const slug = toApplianceKey(name);
+    const hasDetailPage = detailSlugs.has(slug);
+    return {
+      id: name,
+      name,
+      icon: <ApplianceService iconKey={iconKey} />,
+      link: hasDetailPage ? `/services/${slug}` : `/book-online?appliance=${encodeURIComponent(slug)}`,
+      action: hasDetailPage ? 'Read more' : 'Book online',
+    };
+  });
+  const services = backendServices ?? featuredServices.map(service => ({
+    ...service,
+    action: 'Read more',
+  }));
+
   return (
     <div className="services">
       <div className="container">
@@ -20,7 +41,7 @@ export default function OurServices({ custom }: IPops) {
               <div className="services-top-left">
                 <SectionTitle
                   tag="Our Services"
-                  title="Making your appliances look its best."
+                  title="Making your appliances look their best."
                 />
               </div>
             </div>
@@ -63,34 +84,11 @@ export default function OurServices({ custom }: IPops) {
                   </p>
                 </div>
                 <Link href={service.link} className="service-list-link">
-                  Read more
+                  {service.action}
                   <Plus width="13px" height="13px" />
                 </Link>
               </li>
             ))}
-            {custom ? (
-              <li className="services-list-item">
-                <div
-                  className={`services-list-icon ${custom && 'custom-icon'}`}
-                >
-                  <Dryer width="64px" height="64px" />,
-                </div>
-                <div className="services-text-box">
-                  <p className="service-list-name">
-                    <Link href={'/services/dryer'}>Dryer</Link>
-                  </p>
-                  <p className={`service-list-text ${custom && 'custom-text'}`}>
-                    Service and Repairs
-                  </p>
-                </div>
-                <Link href={'/services/dryer'} className="service-list-link">
-                  Read more
-                  <Plus width="13px" height="13px" />
-                </Link>
-              </li>
-            ) : (
-              <></>
-            )}
           </ul>
         </div>
         {!custom && (

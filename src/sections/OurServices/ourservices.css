@@ -53,34 +53,22 @@
 }
 
 .services-mid-list {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   position: relative;
-  flex-wrap: wrap;
   z-index: 1;
-  /* background-color: #061f31; */
+  border-top: 1px solid #314a54;
+  border-left: 1px solid #314a54;
 }
 
 .services-list-item {
-  flex: 0 0 25%;
-  max-width: 25%;
+  min-width: 0;
+  min-height: 265px;
   transition: all 0.9s ease;
   transform-style: preserve-3d;
-  border: 1px solid #314a54;
+  border-right: 1px solid #314a54;
+  border-bottom: 1px solid #314a54;
   padding: 39px 40px 32px;
-}
-.services-list-item:nth-child(2),
-.services-list-item:nth-child(3),
-.services-list-item:nth-child(4) {
-  border-left: 0;
-  border-bottom: 0;
-}
-.services-list-item:nth-child(6),
-.services-list-item:nth-child(7),
-.services-list-item:nth-child(8) {
-  border-left: 0;
-}
-.services-list-item:nth-child(5) {
-  border-top: 0;
 }
 
 .services-text-box {
@@ -170,8 +158,10 @@
     max-width: 720px;
   }
   .services-list-item {
-    flex: 0 0 33.333333%;
-    max-width: 33.333333%;
+    min-height: 250px;
+  }
+  .services-mid-list {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
   .services-top {
     margin-bottom: 69px;
@@ -181,26 +171,6 @@
   }
   .services-top-right {
     margin-left: 0;
-  }
-  .services-list-item:nth-child(2),
-  .services-list-item:nth-child(3) {
-    border-bottom: 1px solid #314a54;
-  }
-  .services-list-item:nth-child(4) {
-    border-left: 1px solid #314a54;
-    border-top: 0;
-  }
-  .services-list-item:nth-child(5) {
-    border-left: 0;
-  }
-  .services-list-item:nth-child(6) {
-    border-top: 0;
-  }
-  .services-list-item:nth-child(7) {
-    border-left: 1px solid #314a54;
-  }
-  .services-list-item:nth-child(8) {
-    border-top: 0;
   }
 }
 
@@ -209,8 +179,10 @@
     max-width: 540px;
   }
   .services-list-item {
-    flex: 0 0 100%;
-    max-width: 100%;
+    min-height: auto;
+  }
+  .services-mid-list {
+    grid-template-columns: 1fr;
   }
 
   .services-top {
@@ -223,31 +195,4 @@
     margin-left: 0;
   }
 
-  .services-list-item:nth-child(1) {
-    border-bottom: 0;
-  }
-  .services-list-item:nth-child(2),
-  .services-list-item:nth-child(3) {
-    border-left: 1px solid #314a54;
-  }
-  .services-list-item:nth-child(4) {
-    border-left: 1px solid #314a54;
-    border-bottom: 1px solid #314a54;
-  }
-  .services-list-item:nth-child(5) {
-    border-bottom: 0;
-  }
-  .services-list-item:nth-child(6) {
-    border-left: 1px solid #314a54;
-    border-bottom: 0;
-  }
-
-  .services-list-item:nth-child(7) {
-    border-left: 1px solid #314a54;
-  }
-
-  .services-list-item:nth-child(8) {
-    border-top: 0;
-    border-left: 1px solid #314a54;
-  }
 }
