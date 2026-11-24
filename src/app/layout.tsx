@@ -64,6 +64,7 @@ export default function RootLayout({
           content="Fast and reliable appliance repair service in Boston MA."
         />
         <meta name="twitter:image" content="/og-image.jpg" />
+        <meta name="google-site-verification" content="F0JQhRprJdQ3_WImyw5QjbDxDRMCB5aKFAfLeqyComA" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
